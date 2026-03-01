@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 35
+
+    namespace "com.example.lpdemo"
+
+    defaultConfig {
+        applicationId "com.example.lpdemo"
+        minSdk 24
+        targetSdk 35
+        versionCode 9
+        versionName "1.0.9"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            def outputFile = output.outputFile
+            def buildTypeName = ""
+
+            if (outputFile != null) {
+                if (outputFile.name.contains('release')) {
+                    buildTypeName += "release-"
+                } else if (outputFile.name.contains('debug')) {
+                    buildTypeName += "debug-"
+                }
+
+            }
+
+            def fileName = "LepuDemo-" +
+                    "${buildTypeName}" +
+                    "${variant.versionName}" +
+                    ".apk"
+            outputFileName = fileName
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'no.nordicsemi.android:ble:2.10.0'
+    implementation(name: 'lepu-blepro-1.2.0', ext: 'aar')
+    implementation 'com.github.michaellee123:LiveEventBus:1.8.14'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.8.4'
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
+    implementation 'commons-io:commons-io:2.16.1'
+    api 'io.getstream:stream-log-android:1.1.4'
+    api 'io.getstream:stream-log-android-file:1.1.4'
+
+}
