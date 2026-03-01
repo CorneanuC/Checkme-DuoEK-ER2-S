@@ -1,3 +1,10 @@
+# This app it is a modified version for
+# ER2-S ECG Device to WORK !
+
+## Shows live diagram
+## List, Read ans Save PDF.
+
+
 # Android SDK API
 
 ## SDK support platform
